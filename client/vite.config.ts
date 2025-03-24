@@ -17,5 +17,13 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   },
+  resolve: {
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.json']
+  }
 })
