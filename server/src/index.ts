@@ -14,8 +14,8 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://your-frontend-domain.vercel.app',
-    'https://your-frontend-domain.vercel.app/'
+    'https://questionnaire-builder-app.vercel.app',
+    'https://questionnaire-builder-app.vercel.app/'
   ],
   credentials: true
 }));
