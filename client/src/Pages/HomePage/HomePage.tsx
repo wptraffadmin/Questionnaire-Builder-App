@@ -25,8 +25,8 @@ const HomePage = () => {
   }
 
   return (
-    <div className="containerr">
-      <h1>Опитування</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Survey</h1>
       <div className={styles.questionnairesList}>
         {questionnaires.map((questionnaire) => (
           <QuestionnaireCard
