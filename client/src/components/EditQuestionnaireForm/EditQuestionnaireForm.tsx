@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AppDispatch, RootState } from '../../store/store';
 import { updateQuestionnaire, fetchQuestionnaireById } from '../../store/slices/questionnaireSlice';
-import { Question } from '../../types';
+import { Question, BaseQuestion } from '../../types';
 import './EditQuestionnaireForm.css';
 
 const EditQuestionnaireForm: React.FC = () => {
@@ -29,24 +29,33 @@ const EditQuestionnaireForm: React.FC = () => {
     if (currentQuestionnaire) {
       setTitle(currentQuestionnaire.title);
       setDescription(currentQuestionnaire.description || '');
-      setQuestions(currentQuestionnaire.questions.map(q => ({
-        ...q,
-        options: [...(q.options || [])]
-      })));
+      setQuestions(currentQuestionnaire.questions.map(q => {
+        // Ensure each question has an _id property
+        if ('_id' in q) {
+          return {
+            ...q,
+            options: [...(q.options || [])]
+          } as Question;
+        } else {
+          return {
+            ...q,
+            _id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+            options: [...(q.options || [])]
+          } as Question;
+        }
+      }));
     }
   }, [currentQuestionnaire]);
 
   const handleAddQuestion = () => {
-    setQuestions([
-      ...questions,
-      {
-        _id: Date.now().toString(),
-        text: '',
-        type: 'text',
-        required: false,
-        options: [],
-      },
-    ]);
+    const newQuestion: Question = {
+      _id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+      text: '',
+      type: 'text',
+      required: false,
+      options: [],
+    };
+    setQuestions([...questions, newQuestion]);
   };
 
   const handleQuestionChange = (index: number, field: keyof Question, value: any) => {
@@ -112,12 +121,16 @@ const EditQuestionnaireForm: React.FC = () => {
     if (!id) return;
 
     try {
+      // Convert Question[] to BaseQuestion[] by omitting _id property
+      const baseQuestions: BaseQuestion[] = questions.map(({ _id, ...rest }) => rest);
+      
       await dispatch(updateQuestionnaire({
         id,
         data: {
           title,
           description,
-          questions,
+          questions: baseQuestions,
+          updatedAt: new Date().toISOString()
         }
       })).unwrap();
       setShowSuccess(true);
@@ -265,24 +278,13 @@ const EditQuestionnaireForm: React.FC = () => {
         </button>
       </div>
 
-      {error && <div className="error-message">{error}</div>}
-
-      <div className="form-actions">
-        <button
-          type="button"
-          onClick={handleBack}
-          className="action-button"
-        >
-          Скасувати
-        </button>
-        <button
-          type="submit"
-          className="submit-button"
-          disabled={loading}
-        >
-          {loading ? 'Оновлення...' : 'Оновити опитування'}
-        </button>
-      </div>
+      <button 
+        type="submit" 
+        className="submit-button"
+        disabled={loading}
+      >
+        {loading ? 'Оновлення...' : 'Оновити опитування'}
+      </button>
     </form>
   );
 };

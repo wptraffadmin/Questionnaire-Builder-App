@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch, RootState } from '../../store/store';
 import { submitAnswers } from '../../store/slices/answersSlice';
-import { Questionnaire } from '../../types';
+import { Questionnaire, Question } from '../../types';
 import './QuestionnaireForm.css';
 
 interface QuestionnaireFormProps {
@@ -16,6 +16,24 @@ const QuestionnaireForm: React.FC<QuestionnaireFormProps> = ({ questionnaire }) 
   const { loading, error } = useSelector((state: RootState) => state.answers);
   const [answers, setAnswers] = useState<Record<string, string | string[]>>({});
   const [localError, setLocalError] = useState<string | null>(null);
+  const [processedQuestions, setProcessedQuestions] = useState<Question[]>([]);
+
+  // Process questions to ensure they all have an _id property
+  useEffect(() => {
+    if (questionnaire && questionnaire.questions) {
+      const questions = questionnaire.questions.map(q => {
+        if ('_id' in q) {
+          return q as Question;
+        } else {
+          return {
+            ...q,
+            _id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
+          } as Question;
+        }
+      });
+      setProcessedQuestions(questions);
+    }
+  }, [questionnaire]);
 
   const handleAnswerChange = (questionId: string, value: string | string[]) => {
     setAnswers(prev => ({
@@ -25,7 +43,7 @@ const QuestionnaireForm: React.FC<QuestionnaireFormProps> = ({ questionnaire }) 
   };
 
   const validateAnswers = () => {
-    for (const question of questionnaire.questions) {
+    for (const question of processedQuestions) {
       if (question.required) {
         const answer = answers[question._id];
         if (!answer || (Array.isArray(answer) && answer.length === 0)) {
@@ -56,6 +74,10 @@ const QuestionnaireForm: React.FC<QuestionnaireFormProps> = ({ questionnaire }) 
     }
   };
 
+  if (processedQuestions.length === 0) {
+    return <div className="loading">Завантаження питань...</div>;
+  }
+
   return (
     <form onSubmit={handleSubmit} className="questionnaire-form">
       <h2>{questionnaire.title}</h2>
@@ -63,7 +85,7 @@ const QuestionnaireForm: React.FC<QuestionnaireFormProps> = ({ questionnaire }) 
         <p className="description">{questionnaire.description}</p>
       )}
 
-      {questionnaire.questions.map((question) => (
+      {processedQuestions.map((question) => (
         <div key={question._id} className="question-container">
           <label className="question-label">
             {question.text}
