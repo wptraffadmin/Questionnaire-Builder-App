@@ -15,7 +15,8 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'https://questionnaire-builder-app.vercel.app',
-    'https://questionnaire-builder-app-git-main-wptraffadmin.vercel.app'
+    'https://questionnaire-builder-app-git-main-wptraffadmin.vercel.app',
+    'https://questionnaire-builder-app-1jj8.vercel.app/'
   ],
   credentials: true
 }));
