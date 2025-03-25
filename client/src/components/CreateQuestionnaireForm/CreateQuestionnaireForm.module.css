@@ -1,161 +1,71 @@
-.create-questionnaire-form {
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.createQuestionnaireForm {
+  border-radius: 17px;
+  padding: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  user-select: none;
+  backdrop-filter: blur(12px);
+  background: #ffffff;
+  width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
 }
 
-.form-group {
+.successTitle {
+  font-size: 32px;
+  font-weight: 600;
   margin-bottom: 20px;
+  color: #ffffff;
+  text-align: center;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.form-group input[type="text"],
-.form-group textarea,
-.form-group select {
+.input {
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-.form-group textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-.questions-section {
-  margin-top: 30px;
-}
-
-.question-item {
-  border: 1px solid #ddd;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-}
-
-.options-section {
-  margin-top: 15px;
-}
-
-.option-item {
-  display: flex;
-  gap: 10px;
+  padding: 20px 10px;
+  border: 1px solid #ccc;
   margin-bottom: 10px;
-  align-items: center;
-}
-
-.add-button,
-.remove-button {
-  padding: 8px 16px;
-  border: none;
   border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s;
 }
 
-.add-button {
-  background-color: #4CAF50;
-  color: white;
+.input:focus {
+  border-color: #0071e2;
+  outline: none;
 }
 
-.remove-button {
-  background-color: #f44336;
-  color: white;
+.checkbox:focus {
+  border-color: #0071e2;
+  outline: none;
 }
 
-.add-button:hover {
-  background-color: #45a049;
-}
-
-.remove-button:hover {
-  background-color: #da190b;
-}
-
-.submit-button {
-  background-color: #2196F3;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  width: 100%;
-  margin-top: 20px;
-  transition: background-color 0.3s;
-}
-
-.submit-button:hover:not(:disabled) {
-  background-color: #1976D2;
-}
-
-.submit-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.error-message {
-  background-color: #ffebee;
-  color: #c62828;
-  padding: 10px;
-  border-radius: 4px;
+.checkbox {
   margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.button {
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #ffffff;
   text-align: center;
 }
 
-.success-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
+.actionButton {
+  max-width: 500px;
+  margin: 0 auto;
+  margin-bottom: 10px;
 }
-
-.success-message {
-  text-align: center;
-  padding: 30px;
-  background-color: #f1f8e9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.success-message h2 {
-  color: #2e7d32;
-  margin-bottom: 20px;
-}
-
-.success-actions {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-}
-
-.action-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s;
-}
-
-.action-button:first-child {
-  background-color: #2196F3;
-  color: white;
-}
-
-.action-button:last-child {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.action-button:hover {
-  opacity: 0.9;
-} 

@@ -157,135 +157,120 @@ const EditQuestionnaireForm: React.FC = () => {
 
   if (showSuccess) {
     return (
-      <div className={styles.successContainer}>
-        <div className={styles.successMessage}>
-          <h2>Опитування успішно оновлено!</h2>
-          <button onClick={handleBack} className={styles.actionButton}>
-            Повернутися на головну
-          </button>
-        </div>
+      <div className={styles.container}>
+        <h2 className={styles.successTitle}>Опитування успішно оновлено!</h2>
+        <button onClick={handleBack} className={styles.actionButton}>
+          Повернутися на головну
+        </button>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.editQuestionnaireForm}>
-      <div className={styles.formGroup}>
-        <label htmlFor="title">Назва опитування:</label>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Редагування опитування</h2>
+      <form onSubmit={handleSubmit} className={styles.editQuestionnaireForm}>
         <input
           type="text"
-          id="title"
+          className={styles.input}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          placeholder="Назва опитування"
           required
         />
-      </div>
 
-      <div className={styles.formGroup}>
-        <label htmlFor="description">Опис:</label>
         <textarea
-          id="description"
+          className={styles.input}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          placeholder="Опис опитування"
         />
-      </div>
 
-      <div className={styles.questionsSection}>
-        <h3>Питання:</h3>
-        {questions.map((question, qIndex) => (
-          <div key={question._id} className={styles.questionItem}>
-            <div className={styles.formGroup}>
-              <label>Текст питання:</label>
+        <div>
+          {questions.map((question, qIndex) => (
+            <div key={question._id}>
               <input
                 type="text"
+                className={styles.input}
                 value={question.text}
                 onChange={(e) => handleQuestionChange(qIndex, 'text', e.target.value)}
-                required
+                placeholder="Текст питання"
               />
-            </div>
 
-            <div className={styles.formGroup}>
-              <label>Тип питання:</label>
               <select
+                className={styles.input}
                 value={question.type}
                 onChange={(e) => handleQuestionChange(qIndex, 'type', e.target.value)}
-                required
               >
                 <option value="text">Текст</option>
-                <option value="radio">Одиночний вибір</option>
-                <option value="checkbox">Множинний вибір</option>
-                <option value="select">Випадаючий список</option>
+                <option value="radio">Один варіант</option>
+                <option value="checkbox">Декілька варіантів</option>
               </select>
-            </div>
 
-            <div className={styles.formGroup}>
-              <label>
+              <div>
                 <input
                   type="checkbox"
+                  className={styles.checkbox}
                   checked={question.required}
                   onChange={(e) => handleQuestionChange(qIndex, 'required', e.target.checked)}
                 />
-                Обов'язкове питання
-              </label>
-            </div>
-
-            {(question.type === 'radio' || question.type === 'checkbox' || question.type === 'select') && (
-              <div className={styles.optionsSection}>
-                <h4>Варіанти відповідей:</h4>
-                {(question.options || []).map((option, oIndex) => (
-                  <div key={oIndex} className={styles.optionItem}>
-                    <input
-                      type="text"
-                      value={option}
-                      onChange={(e) => handleOptionChange(qIndex, oIndex, e.target.value)}
-                      placeholder={`Варіант ${oIndex + 1}`}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveOption(qIndex, oIndex)}
-                      className={styles.removeButton}
-                    >
-                      Видалити
-                    </button>
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={() => handleAddOption(qIndex)}
-                  className={styles.addButton}
-                >
-                  Додати варіант
-                </button>
+                <label>Обов'язкове</label>
               </div>
-            )}
 
-            <button
-              type="button"
-              onClick={() => handleRemoveQuestion(qIndex)}
-              className={styles.removeButton}
-            >
-              Видалити питання
-            </button>
-          </div>
-        ))}
+              {(question.type === 'radio' || question.type === 'checkbox') && (
+                <div>
+                  {question.options?.map((option, oIndex) => (
+                    <div key={oIndex}>
+                      <input
+                        type="text"
+                        className={styles.input}
+                        value={option}
+                        onChange={(e) => handleOptionChange(qIndex, oIndex, e.target.value)}
+                        placeholder="Варіант відповіді"
+                      />
+                      <button
+                        type="button"
+                        className={styles.button}
+                        onClick={() => handleRemoveOption(qIndex, oIndex)}
+                      >
+                        Видалити варіант
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    className={styles.button}
+                    onClick={() => handleAddOption(qIndex)}
+                  >
+                    Додати варіант
+                  </button>
+                </div>
+              )}
+
+              <button
+                type="button"
+                className={styles.button}
+                onClick={() => handleRemoveQuestion(qIndex)}
+              >
+                Видалити питання
+              </button>
+            </div>
+          ))}
+        </div>
 
         <button
           type="button"
+          className={styles.actionButton}
           onClick={handleAddQuestion}
-          className={styles.addButton}
         >
           Додати питання
         </button>
-      </div>
 
-      <button 
-        type="submit" 
-        className={styles.submitButton}
-        disabled={loading}
-      >
-        {loading ? 'Оновлення...' : 'Оновити опитування'}
-      </button>
-    </form>
+        <button type="submit" className={styles.actionButton}>
+          Зберегти зміни
+        </button>
+      </form>
+    </div>
   );
 };
 

@@ -20,7 +20,7 @@ const QuestionnairePage: React.FC = () => {
   }, [dispatch, id]);
 
   if (loading) {
-    return <div className={styles.loading}>Завантаження...</div>;
+    return <div className={styles.loading}>Loading...</div>;
   }
 
   if (error) {
@@ -28,11 +28,11 @@ const QuestionnairePage: React.FC = () => {
   }
 
   if (!currentQuestionnaire) {
-    return <div className={styles.notFound}>Опитування не знайдено</div>;
+    return <div className={styles.notFound}>Survey not found</div>;
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <QuestionnaireForm questionnaire={currentQuestionnaire} />
     </div>
   );

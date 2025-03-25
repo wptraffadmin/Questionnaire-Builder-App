@@ -102,13 +102,13 @@ const CreateQuestionnaireForm: React.FC = () => {
     return (
       <div className={styles.successContainer}>
         <div className={styles.successMessage}>
-          <h2>Опитування успішно створено!</h2>
+          <h2 className={styles.successTitle}>Survey successfully created!</h2>
           <div className={styles.successActions}>
             <button onClick={handleCreateNew} className={styles.actionButton}>
-              Створити ще одне опитування
+              Create another questionnaire
             </button>
             <button onClick={() => navigate('/')} className={styles.actionButton}>
-              Перейти на головну
+              Go to home
             </button>
           </div>
         </div>
@@ -117,34 +117,39 @@ const CreateQuestionnaireForm: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.createQuestionnaireForm}>
+    <div>
+      <h1 className={styles.title}>Creating a new survey</h1>
+      <form onSubmit={handleSubmit} className={styles.createQuestionnaireForm}>
       <div className={styles.formGroup}>
-        <label htmlFor="title">Назва опитування:</label>
         <input
+          className={styles.input}
           type="text"
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
+          placeholder="Survey title"
         />
       </div>
 
       <div className={styles.formGroup}>
-        <label htmlFor="description">Опис:</label>
         <textarea
+          className={styles.input}
           id="description"
+          placeholder="Survey description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
 
       <div className={styles.questionsSection}>
-        <h3>Питання</h3>
+        <h3>Question</h3>
         {questions.map((question, qIndex) => (
           <div key={qIndex} className={styles.questionItem}>
             <div className={styles.formGroup}>
-              <label>Текст питання:</label>
               <input
+                placeholder="Question text"
+                className={styles.input}
                 type="text"
                 value={question.text}
                 onChange={(e) => handleQuestionChange(qIndex, 'text', e.target.value)}
@@ -153,55 +158,57 @@ const CreateQuestionnaireForm: React.FC = () => {
             </div>
 
             <div className={styles.formGroup}>
-              <label>Тип питання:</label>
               <select
+                className={styles.input}
                 value={question.type}
                 onChange={(e) => handleQuestionChange(qIndex, 'type', e.target.value)}
               >
-                <option value="text">Текстова відповідь</option>
-                <option value="radio">Одиночний вибір</option>
-                <option value="checkbox">Множинний вибір</option>
-                <option value="select">Випадаючий список</option>
+                <option value="text">Text response</option>
+                <option value="radio">Single Choice</option>
+                <option value="checkbox">Multiple Choice</option>
+                <option value="select">Dropdown List</option>
               </select>
             </div>
 
             <div className={styles.formGroup}>
               <label>
                 <input
+                  className={styles.checkbox}
                   type="checkbox"
                   checked={question.required}
                   onChange={(e) => handleQuestionChange(qIndex, 'required', e.target.checked)}
                 />
-                Обов'язкове питання
+                Required question
               </label>
             </div>
 
             {(question.type === 'radio' || question.type === 'checkbox' || question.type === 'select') && (
               <div className={styles.optionsSection}>
-                <h4>Варіанти відповідей:</h4>
+                <h4>Answer options</h4>
                 {(question.options || []).map((option, oIndex) => (
                   <div key={oIndex} className={styles.optionItem}>
                     <input
+                      className={styles.input}
                       type="text"
                       value={option}
                       onChange={(e) => handleOptionChange(qIndex, oIndex, e.target.value)}
-                      placeholder={`Варіант ${oIndex + 1}`}
+                      placeholder={`Variant ${oIndex + 1}`}
                     />
                     <button
                       type="button"
                       onClick={() => handleRemoveOption(qIndex, oIndex)}
-                      className={styles.removeButton}
+                      className={styles.button}
                     >
-                      Видалити
+                      Delete option
                     </button>
                   </div>
                 ))}
                 <button
                   type="button"
                   onClick={() => handleAddOption(qIndex)}
-                  className={styles.addButton}
+                  className={styles.button}
                 >
-                  Додати варіант
+                  Add option
                 </button>
               </div>
             )}
@@ -209,9 +216,9 @@ const CreateQuestionnaireForm: React.FC = () => {
             <button
               type="button"
               onClick={() => handleRemoveQuestion(qIndex)}
-              className={styles.removeButton}
+              className={styles.button}
             >
-              Видалити питання
+              Delete question
             </button>
           </div>
         ))}
@@ -219,9 +226,9 @@ const CreateQuestionnaireForm: React.FC = () => {
         <button
           type="button"
           onClick={handleAddQuestion}
-          className={styles.addButton}
+          className={styles.button}
         >
-          Додати питання
+          Add question
         </button>
       </div>
 
@@ -229,12 +236,13 @@ const CreateQuestionnaireForm: React.FC = () => {
 
       <button
         type="submit"
-        className={styles.submitButton}
+        className={styles.button}
         disabled={loading}
       >
-        {loading ? 'Створення...' : 'Створити опитування'}
+        {loading ? 'Creation...' : 'Create a survey'}
       </button>
     </form>
+    </div>
   );
 };
 

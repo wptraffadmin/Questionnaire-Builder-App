@@ -168,7 +168,7 @@ const QuestionnaireForm: React.FC<QuestionnaireFormProps> = ({ questionnaire }) 
         className={styles.submitButton}
         disabled={loading}
       >
-        {loading ? 'Відправка...' : 'Відправити відповіді'}
+        {loading ? 'Submission...' : 'Submit'}
       </button>
     </form>
   );
