@@ -1,9 +1,15 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Отримуємо базовий URL із змінної середовища
+let baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+// Перевіряємо, чи містить URL вже /api, якщо ні - додаємо
+if (!baseURL.endsWith('/api')) {
+  baseURL = `${baseURL}/api`;
+}
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },

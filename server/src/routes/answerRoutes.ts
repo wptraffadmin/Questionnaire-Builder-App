@@ -8,9 +8,10 @@ import {
 
 const router = express.Router();
 
-router.post('/:questionnaireId', submitAnswers);
-router.get('/:questionnaireId', getAnswers);
-router.get('/', getAllAnswers);
+// Порядок важливий! Більш конкретні маршрути повинні бути першими
 router.get('/stats/:questionnaireId', getQuestionnaireStats);
+router.get('/', getAllAnswers);
+router.get('/:questionnaireId', getAnswers);
+router.post('/:questionnaireId', submitAnswers);
 
 export default router; 
