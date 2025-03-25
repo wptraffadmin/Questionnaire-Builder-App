@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch, RootState } from '../../store/store';
 import { createQuestionnaire } from '../../store/slices/questionnaireSlice';
 import { BaseQuestion, BaseQuestionnaire } from '../../types';
-import './CreateQuestionnaireForm.css';
+import styles from './CreateQuestionnaireForm.module.css';
 
 const CreateQuestionnaireForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -100,14 +100,14 @@ const CreateQuestionnaireForm: React.FC = () => {
 
   if (showSuccess) {
     return (
-      <div className="success-container">
-        <div className="success-message">
+      <div className={styles.successContainer}>
+        <div className={styles.successMessage}>
           <h2>Опитування успішно створено!</h2>
-          <div className="success-actions">
-            <button onClick={handleCreateNew} className="action-button">
+          <div className={styles.successActions}>
+            <button onClick={handleCreateNew} className={styles.actionButton}>
               Створити ще одне опитування
             </button>
-            <button onClick={() => navigate('/')} className="action-button">
+            <button onClick={() => navigate('/')} className={styles.actionButton}>
               Перейти на головну
             </button>
           </div>
@@ -117,8 +117,8 @@ const CreateQuestionnaireForm: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="create-questionnaire-form">
-      <div className="form-group">
+    <form onSubmit={handleSubmit} className={styles.createQuestionnaireForm}>
+      <div className={styles.formGroup}>
         <label htmlFor="title">Назва опитування:</label>
         <input
           type="text"
@@ -129,7 +129,7 @@ const CreateQuestionnaireForm: React.FC = () => {
         />
       </div>
 
-      <div className="form-group">
+      <div className={styles.formGroup}>
         <label htmlFor="description">Опис:</label>
         <textarea
           id="description"
@@ -138,11 +138,11 @@ const CreateQuestionnaireForm: React.FC = () => {
         />
       </div>
 
-      <div className="questions-section">
+      <div className={styles.questionsSection}>
         <h3>Питання</h3>
         {questions.map((question, qIndex) => (
-          <div key={qIndex} className="question-item">
-            <div className="form-group">
+          <div key={qIndex} className={styles.questionItem}>
+            <div className={styles.formGroup}>
               <label>Текст питання:</label>
               <input
                 type="text"
@@ -152,7 +152,7 @@ const CreateQuestionnaireForm: React.FC = () => {
               />
             </div>
 
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <label>Тип питання:</label>
               <select
                 value={question.type}
@@ -165,7 +165,7 @@ const CreateQuestionnaireForm: React.FC = () => {
               </select>
             </div>
 
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <label>
                 <input
                   type="checkbox"
@@ -177,10 +177,10 @@ const CreateQuestionnaireForm: React.FC = () => {
             </div>
 
             {(question.type === 'radio' || question.type === 'checkbox' || question.type === 'select') && (
-              <div className="options-section">
+              <div className={styles.optionsSection}>
                 <h4>Варіанти відповідей:</h4>
                 {(question.options || []).map((option, oIndex) => (
-                  <div key={oIndex} className="option-item">
+                  <div key={oIndex} className={styles.optionItem}>
                     <input
                       type="text"
                       value={option}
@@ -190,7 +190,7 @@ const CreateQuestionnaireForm: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleRemoveOption(qIndex, oIndex)}
-                      className="remove-button"
+                      className={styles.removeButton}
                     >
                       Видалити
                     </button>
@@ -199,7 +199,7 @@ const CreateQuestionnaireForm: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => handleAddOption(qIndex)}
-                  className="add-button"
+                  className={styles.addButton}
                 >
                   Додати варіант
                 </button>
@@ -209,7 +209,7 @@ const CreateQuestionnaireForm: React.FC = () => {
             <button
               type="button"
               onClick={() => handleRemoveQuestion(qIndex)}
-              className="remove-button"
+              className={styles.removeButton}
             >
               Видалити питання
             </button>
@@ -219,17 +219,17 @@ const CreateQuestionnaireForm: React.FC = () => {
         <button
           type="button"
           onClick={handleAddQuestion}
-          className="add-button"
+          className={styles.addButton}
         >
           Додати питання
         </button>
       </div>
 
-      {error && <div className="error-message">{error}</div>}
+      {error && <div className={styles.errorMessage}>{error}</div>}
 
       <button
         type="submit"
-        className="submit-button"
+        className={styles.submitButton}
         disabled={loading}
       >
         {loading ? 'Створення...' : 'Створити опитування'}

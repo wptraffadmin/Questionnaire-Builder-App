@@ -3,7 +3,7 @@ import EditQuestionnaireForm from '../../components/EditQuestionnaireForm/EditQu
 
 const EditQuestionnairePage: React.FC = () => {
   return (
-    <div className="edit-questionnaire-page">
+    <div>
       <h1>Редагування опитування</h1>
       <EditQuestionnaireForm />
     </div>

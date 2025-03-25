@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { fetchQuestionnaireById } from '../../store/slices/questionnaireSlice';
 import QuestionnaireForm from '../../components/QuestionnaireForm/QuestionnaireForm';
-import './QuestionnairePage.css';
+import styles from './QuestionnairePage.module.css';
 
 const QuestionnairePage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,19 +20,19 @@ const QuestionnairePage: React.FC = () => {
   }, [dispatch, id]);
 
   if (loading) {
-    return <div className="loading">Завантаження...</div>;
+    return <div className={styles.loading}>Завантаження...</div>;
   }
 
   if (error) {
-    return <div className="error">{error}</div>;
+    return <div className={styles.error}>{error}</div>;
   }
 
   if (!currentQuestionnaire) {
-    return <div className="error">Опитування не знайдено</div>;
+    return <div className={styles.notFound}>Опитування не знайдено</div>;
   }
 
   return (
-    <div className="questionnaire-page">
+    <div>
       <QuestionnaireForm questionnaire={currentQuestionnaire} />
     </div>
   );

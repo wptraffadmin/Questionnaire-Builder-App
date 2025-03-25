@@ -1,10 +1,10 @@
 import CreateQuestionnaireForm from '../../components/CreateQuestionnaireForm/CreateQuestionnaireForm';
-import './CreateQuestionnaire.css';
+import styles from './CreateQuestionnaire.module.css';
 
-const CreateQuestionnairePage = () => {
+const CreateQuestionnairePage: React.FC = () => {
   return (
-    <div className="create-questionnaire-page">
-      <h1>Створення нового опитування</h1>
+    <div>
+      <h1 className={styles.title}>Створення нового опитування</h1>
       <CreateQuestionnaireForm />
     </div>
   );

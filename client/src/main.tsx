@@ -7,10 +7,17 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 
+const routerOptions = {
+  future: {
+    v7_startTransition: true,
+    v7_relativeSplatPath: true
+  }
+};
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter {...routerOptions}>
         <App />
       </BrowserRouter>
     </Provider>   

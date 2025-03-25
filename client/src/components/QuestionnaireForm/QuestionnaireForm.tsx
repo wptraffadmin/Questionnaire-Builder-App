@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppDispatch, RootState } from '../../store/store';
 import { submitAnswers } from '../../store/slices/answersSlice';
 import { Questionnaire, Question } from '../../types';
-import './QuestionnaireForm.css';
+import styles from './QuestionnaireForm.module.css';
 
 interface QuestionnaireFormProps {
   questionnaire: Questionnaire;
@@ -75,21 +75,21 @@ const QuestionnaireForm: React.FC<QuestionnaireFormProps> = ({ questionnaire }) 
   };
 
   if (processedQuestions.length === 0) {
-    return <div className="loading">Завантаження питань...</div>;
+    return <div className={styles.loading}>Завантаження питань...</div>;
   }
 
   return (
-    <form onSubmit={handleSubmit} className="questionnaire-form">
+    <form onSubmit={handleSubmit} className={styles.questionnaireForm}>
       <h2>{questionnaire.title}</h2>
       {questionnaire.description && (
-        <p className="description">{questionnaire.description}</p>
+        <p className={styles.description}>{questionnaire.description}</p>
       )}
 
       {processedQuestions.map((question) => (
-        <div key={question._id} className="question-container">
-          <label className="question-label">
+        <div key={question._id} className={styles.questionContainer}>
+          <label className={styles.questionLabel}>
             {question.text}
-            {question.required && <span className="required">*</span>}
+            {question.required && <span className={styles.required}>*</span>}
           </label>
 
           {question.type === 'text' && (
@@ -102,9 +102,9 @@ const QuestionnaireForm: React.FC<QuestionnaireFormProps> = ({ questionnaire }) 
           )}
 
           {question.type === 'radio' && question.options && (
-            <div className="options-container">
+            <div className={styles.optionsContainer}>
               {question.options.map((option, index) => (
-                <label key={index} className="option-label">
+                <label key={index} className={styles.optionLabel}>
                   <input
                     type="radio"
                     name={question._id}
@@ -120,9 +120,9 @@ const QuestionnaireForm: React.FC<QuestionnaireFormProps> = ({ questionnaire }) 
           )}
 
           {question.type === 'checkbox' && question.options && (
-            <div className="options-container">
+            <div className={styles.optionsContainer}>
               {question.options.map((option, index) => (
-                <label key={index} className="option-label">
+                <label key={index} className={styles.optionLabel}>
                   <input
                     type="checkbox"
                     value={option}
@@ -146,6 +146,7 @@ const QuestionnaireForm: React.FC<QuestionnaireFormProps> = ({ questionnaire }) 
               value={answers[question._id] as string || ''}
               onChange={(e) => handleAnswerChange(question._id, e.target.value)}
               required={question.required}
+              className={styles.select}
             >
               <option value="">Оберіть відповідь</option>
               {question.options.map((option, index) => (
@@ -159,12 +160,12 @@ const QuestionnaireForm: React.FC<QuestionnaireFormProps> = ({ questionnaire }) 
       ))}
 
       {(error || localError) && (
-        <div className="error-message">{error || localError}</div>
+        <div className={styles.errorMessage}>{error || localError}</div>
       )}
 
       <button 
         type="submit" 
-        className="submit-button"
+        className={styles.submitButton}
         disabled={loading}
       >
         {loading ? 'Відправка...' : 'Відправити відповіді'}
