@@ -92,3 +92,8 @@ button, .actionButton {
     transition: all 0.35s linear;
     text-decoration: none;
 }
+
+.confirmationActions {
+  display: flex;
+  gap: 10px;
+}
