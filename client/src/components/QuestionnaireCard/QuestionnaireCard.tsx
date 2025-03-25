@@ -41,45 +41,45 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ questionnaire }) 
       <div>
       <div className={styles.questionnaireStats}>
         <div className={styles.statItem}>
-          <span className={styles.statLabel}>Проходжень</span>
+          <span className={styles.statLabel}>Completion</span>
           <span className={styles.statValue}>{stats?.totalResponses || 0}</span>
         </div>
         <div className={styles.statItem}>
-          <span className={styles.statLabel}>Запитань</span>
+          <span className={styles.statLabel}>Questions</span>
           <span className={styles.statValue}>{stats?.questionsCount || questionnaire.questions.length}</span>
         </div>
       </div>
 
       <div className={styles.actions}>
         <Link to={`/questionnaire/${questionnaire._id}`} className={styles.actionButton}>
-          Відкрити
+          Start 
         </Link>
         <Link to={`/edit/${questionnaire._id}`} className={styles.actionButton}>
-          Редагувати
+          Edit
         </Link>
         <button 
           onClick={() => setShowConfirm(true)} 
           className={`${styles.actionButton} ${styles.deleteButton}`}
         >
-          Видалити
+          Delete
         </button>
       </div>
       </div>
       {showConfirm && (
         <div className={styles.confirmationModal}>
-          <p>Ви впевнені, що хочете видалити це опитування?</p>
+          <p>Are you sure you want to delete this survey?</p>
           <div className={styles.confirmationActions}>
             <button 
               onClick={handleDelete}
               className={`${styles.actionButton} ${styles.confirmDelete}`}
             >
-              Так, видалити
+              Yes, delete
             </button>
             <button 
               onClick={() => setShowConfirm(false)}
               className={styles.actionButton}
             >
-              Скасувати
+              Cancel
             </button>
           </div>
         </div>

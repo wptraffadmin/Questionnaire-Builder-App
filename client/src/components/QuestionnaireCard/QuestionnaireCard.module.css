@@ -70,13 +70,12 @@
 
 .actions {
   display: flex;
-  justify-content: center;
   gap: 10px;
 } 
 
 button, .actionButton {
   cursor: pointer;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     line-height: 1.5rem;
     padding: 10px 15px;
@@ -91,6 +90,7 @@ button, .actionButton {
     gap: 5px;
     transition: all 0.35s linear;
     text-decoration: none;
+    width: 100%;
 }
 
 .confirmationActions {
