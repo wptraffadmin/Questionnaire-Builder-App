@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch, RootState } from '../../store/store';
 import { createQuestionnaire } from '../../store/slices/questionnaireSlice';
-import { Question } from '../../types';
+import { BaseQuestion, BaseQuestionnaire } from '../../types';
 import './CreateQuestionnaireForm.css';
 
 const CreateQuestionnaireForm: React.FC = () => {
@@ -14,7 +14,7 @@ const CreateQuestionnaireForm: React.FC = () => {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<BaseQuestion[]>([]);
 
   const handleAddQuestion = () => {
     setQuestions([
@@ -28,7 +28,7 @@ const CreateQuestionnaireForm: React.FC = () => {
     ]);
   };
 
-  const handleQuestionChange = (index: number, field: keyof Question, value: any) => {
+  const handleQuestionChange = (index: number, field: keyof BaseQuestion, value: any) => {
     const updatedQuestions = [...questions];
     updatedQuestions[index] = {
       ...updatedQuestions[index],
@@ -76,11 +76,15 @@ const CreateQuestionnaireForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await dispatch(createQuestionnaire({
+      const now = new Date().toISOString();
+      const questionnaireData: BaseQuestionnaire = {
         title,
         description,
         questions,
-      })).unwrap();
+        createdAt: now,
+        updatedAt: now
+      };
+      await dispatch(createQuestionnaire(questionnaireData)).unwrap();
       setShowSuccess(true);
     } catch (error) {
       console.error('Error creating questionnaire:', error);
