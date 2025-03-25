@@ -6,7 +6,7 @@
 }
 
 .title {
-    font-size: 24px;
+    font-size: 32px;
     font-weight: 600;
     margin-bottom: 20px;
     color: #ffffff;
@@ -15,5 +15,5 @@
 .questionnairesList {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 10px;
+    gap: 20px;
 }

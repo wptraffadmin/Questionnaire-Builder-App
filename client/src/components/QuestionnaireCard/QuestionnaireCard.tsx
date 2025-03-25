@@ -34,16 +34,18 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ questionnaire }) 
 
   return (
     <div className={styles.questionnaireCard}>
+      <div>
       <h2 className={styles.title}>{questionnaire.title}</h2>
       <p className={styles.description}>{questionnaire.description}</p>
-      
+      </div>
+      <div>
       <div className={styles.questionnaireStats}>
         <div className={styles.statItem}>
-          <span className={styles.statLabel}>Проходжень:</span>
+          <span className={styles.statLabel}>Проходжень</span>
           <span className={styles.statValue}>{stats?.totalResponses || 0}</span>
         </div>
         <div className={styles.statItem}>
-          <span className={styles.statLabel}>Запитань:</span>
+          <span className={styles.statLabel}>Запитань</span>
           <span className={styles.statValue}>{stats?.questionsCount || questionnaire.questions.length}</span>
         </div>
       </div>
@@ -62,7 +64,7 @@ const QuestionnaireCard: React.FC<QuestionnaireCardProps> = ({ questionnaire }) 
           Видалити
         </button>
       </div>
-
+      </div>
       {showConfirm && (
         <div className={styles.confirmationModal}>
           <p>Ви впевнені, що хочете видалити це опитування?</p>

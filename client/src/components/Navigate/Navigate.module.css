@@ -66,6 +66,7 @@
     align-items: center;
     gap: 5px;
     transition: all 0.35s linear;
+    text-decoration: none;
   }
   
   .button:hover {
