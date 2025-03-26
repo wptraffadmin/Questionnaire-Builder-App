@@ -144,7 +144,7 @@ const EditQuestionnaireForm: React.FC = () => {
   };
 
   if (loading) {
-    return <div className={styles.loading}>Завантаження...</div>;
+    return <div className={styles.loading}>Loading...</div>;
   }
 
   if (error) {
@@ -152,15 +152,15 @@ const EditQuestionnaireForm: React.FC = () => {
   }
 
   if (!currentQuestionnaire) {
-    return <div className={styles.error}>Опитування не знайдено</div>;
+    return <div className={styles.error}>Questionnaire not found</div>;
   }
 
   if (showSuccess) {
     return (
       <div className={styles.container}>
-        <h2 className={styles.successTitle}>Опитування успішно оновлено!</h2>
+        <h2 className={styles.successTitle}>Questionnaire successfully updated!</h2>
         <button onClick={handleBack} className={styles.actionButton}>
-          Повернутися на головну
+          Go to home
         </button>
       </div>
     );
@@ -168,14 +168,14 @@ const EditQuestionnaireForm: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Редагування опитування</h2>
+      <h2 className={styles.title}>Edit questionnaire</h2>
       <form onSubmit={handleSubmit} className={styles.editQuestionnaireForm}>
         <input
           type="text"
           className={styles.input}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Назва опитування"
+          placeholder="Survey title"
           required
         />
 
@@ -183,7 +183,7 @@ const EditQuestionnaireForm: React.FC = () => {
           className={styles.input}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Опис опитування"
+          placeholder="Survey description"
         />
 
         <div>
@@ -194,7 +194,7 @@ const EditQuestionnaireForm: React.FC = () => {
                 className={styles.input}
                 value={question.text}
                 onChange={(e) => handleQuestionChange(qIndex, 'text', e.target.value)}
-                placeholder="Текст питання"
+                placeholder="Question text"
               />
 
               <select
@@ -202,9 +202,9 @@ const EditQuestionnaireForm: React.FC = () => {
                 value={question.type}
                 onChange={(e) => handleQuestionChange(qIndex, 'type', e.target.value)}
               >
-                <option value="text">Текст</option>
-                <option value="radio">Один варіант</option>
-                <option value="checkbox">Декілька варіантів</option>
+                <option value="text">Text</option>
+                <option value="radio">Single choice</option>
+                <option value="checkbox">Multiple choice</option>
               </select>
 
               <div>
@@ -214,7 +214,7 @@ const EditQuestionnaireForm: React.FC = () => {
                   checked={question.required}
                   onChange={(e) => handleQuestionChange(qIndex, 'required', e.target.checked)}
                 />
-                <label>Обов'язкове</label>
+                <label>Required question</label>
               </div>
 
               {(question.type === 'radio' || question.type === 'checkbox') && (
@@ -226,14 +226,14 @@ const EditQuestionnaireForm: React.FC = () => {
                         className={styles.input}
                         value={option}
                         onChange={(e) => handleOptionChange(qIndex, oIndex, e.target.value)}
-                        placeholder="Варіант відповіді"
+                        placeholder={`Variant ${oIndex + 1}`}
                       />
                       <button
                         type="button"
                         className={styles.button}
                         onClick={() => handleRemoveOption(qIndex, oIndex)}
                       >
-                        Видалити варіант
+                        Delete option
                       </button>
                     </div>
                   ))}
@@ -242,7 +242,7 @@ const EditQuestionnaireForm: React.FC = () => {
                     className={styles.button}
                     onClick={() => handleAddOption(qIndex)}
                   >
-                    Додати варіант
+                    Add option
                   </button>
                 </div>
               )}
@@ -252,7 +252,7 @@ const EditQuestionnaireForm: React.FC = () => {
                 className={styles.button}
                 onClick={() => handleRemoveQuestion(qIndex)}
               >
-                Видалити питання
+                Delete question
               </button>
             </div>
           ))}
@@ -260,14 +260,14 @@ const EditQuestionnaireForm: React.FC = () => {
 
         <button
           type="button"
-          className={styles.actionButton}
+          className={styles.button}
           onClick={handleAddQuestion}
         >
-          Додати питання
+          Add question
         </button>
 
-        <button type="submit" className={styles.actionButton}>
-          Зберегти зміни
+        <button type="submit" className={styles.button}>
+          Save changes
         </button>
       </form>
     </div>
